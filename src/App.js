@@ -5,6 +5,10 @@ import {useState}  from 'react';
 function App() {
   const[toDos,setToDos]= useState([])
   const[toDo,setToDo]=useState('')
+  // const deleteTask = (id) => {
+  //   setToDos(toDos.filter((toDo) => toDo.id !== id))
+  // };
+  const deleteTodo = idToDelete => setToDos(currentTodos => currentTodos.filter(toDo => toDo.id !== idToDelete))
   return (
     <div className="app">
     <div className="mainHeading">
@@ -18,7 +22,9 @@ function App() {
       <input value={toDo} onChange={(e)=> setToDo(e.target.value)} type="text" placeholder="🖊️ Add item..." />     
       {/* e is an event , ...toDo - spread operator to seperate todos*/ }
       <i onClick={()=> setToDos([...toDos,{id:Date.now() ,text: toDo,status:false}])} className="fas fa-plus"></i>
+    
     </div>
+   
     <div className="todos">
     { toDos.map((obj)=>{
     
@@ -37,9 +43,13 @@ function App() {
             }}  value={obj.status}type="checkbox" name="" id="" />
           <p>{obj.text}</p>
         </div>
+        {/* <div className="right">
+          <i className="fas fa-times">{deleteTask}</i>
+        
+        </div> */}
         <div className="right">
-        <i className="fas fa-times"></i>
-        </div>
+                  <i onClick ={() => deleteTodo(obj.id)} className="fas fa-trash"></i>
+                </div>
       </div>)
       })}
       {toDos.map((obj)=>{
